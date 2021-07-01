@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, } from 'react-native';
+import { KeyboardAvoidingView,StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, } from 'react-native';
 import Task from './components/Task';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function App() {
@@ -40,12 +40,15 @@ export default function App() {
     Keyboard.dismiss();
     setTaskItems([...taskItems, task])
     setTask(null);
+    const item = {  id: (new Date().getTime()).toString() }
+    setExpenses( expenses.concat([item]) )
   }
 
   const completeTask = (index) => {
     let itemsCopy = [...taskItems];
     itemsCopy.splice(index, 1);
     setTaskItems(itemsCopy)
+    
   }
   
 
@@ -85,7 +88,8 @@ export default function App() {
         style={styles.writeTaskWrapper}
       >
         <TextInput style={styles.input} placeholder={'Write a task'} value={task} onChangeText={text => setTask(text)} />
-        <TouchableOpacity onPress={() => handleAddTask()}>
+        
+        <TouchableOpacity style={styles.button} onPress={handleAddTask}>
           <View style={styles.addWrapper}>
             <Text style={styles.addText}>+</Text>
           </View>
