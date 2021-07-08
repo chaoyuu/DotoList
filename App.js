@@ -1,14 +1,26 @@
-import React, {useState,useEffect} from 'react';
-import { KeyboardAvoidingView,StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, } from 'react-native';
-import Task from './components/Task';
+import * as React from 'react';
+import {useState,useEffect} from 'react';
+import { Text, View, StyleSheet} from 'react-native';
+import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {Colours} from './components/Colours'
+import {Header} from './components/Header'
+import {List} from './components/List'
+
+const appDefintion = {
+  name: "Today‘s  Task",
+}
+
+const storageKey = 'listdata'
+
 export default function App() {
-  const [task, setTask] = useState();
-  const [taskItems, setTaskItems] = useState([]);
-  const[expenses, setExpenses ] = useState([])
+  const [data,setData] = useState([])
+
+
   useEffect( () => {
-    if( expenses.length > 0 ) {
-      AsyncStorage.setItem( 'expensesData' ,JSON.stringify(expenses) )
+    if( data.length > 0 ) {
+      AsyncStorage.setItem( 'data' ,JSON.stringify(data) )
       .then( () => { 
         console.log('data stored')
       })
@@ -17,7 +29,7 @@ export default function App() {
       })
     }
     else {
-      AsyncStorage.getItem('expensesData')
+      AsyncStorage.getItem('data')
       .then( (value) => {
         if( value ) {
           const items = JSON.parse(value)
@@ -25,7 +37,7 @@ export default function App() {
             const str = item.id.toString()
             item.id = str
           })
-          setExpenses( items )
+          setData( items )
         }
         else {
           console.log('no data')
@@ -36,68 +48,44 @@ export default function App() {
       })
     }
   })
-  const handleAddTask = () => {
-    Keyboard.dismiss();
-    setTaskItems([...taskItems, task])
-    setTask(null);
-    const item = {  id: (new Date().getTime()).toString() }
-    setExpenses( expenses.concat([item]) )
+  
+  const addItem = ( itemName) => {
+    let itemId = new Date().getTime()
+    let Item = { name: itemName, id: itemId, status: false }
+    setData( data.concat(Item) )
   }
 
-  const completeTask = (index) => {
-    let itemsCopy = [...taskItems];
-    itemsCopy.splice(index, 1);
-    setTaskItems(itemsCopy)
-    
+  const markItemDone = ( itemId ) => {
+    const items = [...data] // [ {item1} , {item2} ]
+    items.forEach( (item) => {
+      if(item.id === itemId ) {
+        item.status = true
+      }
+    })
+    // set the items array as the data
+    setData( items )
   }
-  
+
+  const deleteItem = ( itemId ) => {
+    //console.log( itemId )
+    // copy the data state
+    const items = [...data]
+    items.forEach( (item,index) => {
+      if(item.id === itemId ) {
+        items.splice( index, 1 )
+      }
+    })
+    setData( items )
+  }
+
 
   return (
     <View style={styles.container}>
-      {/* Added this scroll view to enable scrolling when list gets longer than the page */}
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1
-        }}
-        keyboardShouldPersistTaps='handled'
-      >
-
-      {/* Today's Tasks */}
-      <View style={styles.tasksWrapper}>
-        <Text style={styles.sectionTitle}>Today's tasks</Text>
-        <View style={styles.items}>
-          {/* This is where the tasks will go! */}
-          {
-            taskItems.map((item, index) => {
-              return (
-                <TouchableOpacity key={index}  onPress={() => completeTask(index)}>
-                  <Task text={item} /> 
-                </TouchableOpacity>
-              )
-            })
-          }
-        </View>
-      </View>
-        
-      </ScrollView>
-
-      {/* Write a task */}
-      {/* Uses a keyboard avoiding view which ensures the keyboard does not cover the items on screen */}
-      <KeyboardAvoidingView 
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.writeTaskWrapper}
-      >
-        <TextInput style={styles.input} placeholder={'Write a task'} value={task} onChangeText={text => setTask(text)} />
-        
-        <TouchableOpacity style={styles.button} onPress={handleAddTask}>
-          <View style={styles.addWrapper}>
-            <Text style={styles.addText}>+</Text>
+      <Header name={ appDefintion.name } addHandler={addItem}/>
+      <List listItems={data} doneHandler={markItemDone} deleteHandler={deleteItem} />
+      <View style={styles.addWrapper}>
+            
           </View>
-        </TouchableOpacity>
-        
-        
-      </KeyboardAvoidingView>
-      
     </View>
   );
 }
@@ -105,45 +93,14 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8EAED',
+    justifyContent: 'flex-start',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor:'#fff',
   },
-  tasksWrapper: {
-    paddingTop: 80,
-    paddingHorizontal: 20,
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: 'bold'
-  },
-  items: {
-    marginTop: 30,
-  },
-  writeTaskWrapper: {
-    position: 'absolute',
-    bottom: 60,
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  input: {
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    backgroundColor: '#FFF',
-    borderRadius: 60,
-    borderColor: '#C0C0C0',
-    borderWidth: 1,
-    width: 250,
-  },
-  addWrapper: {
-    width: 60,
-    height: 60,
-    backgroundColor: '#FFF',
-    borderRadius: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: '#C0C0C0',
-    borderWidth: 1,
-  },
-  addText: {},
 });
