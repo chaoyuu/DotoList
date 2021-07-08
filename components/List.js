@@ -39,6 +39,7 @@ const ListStyle = StyleSheet.create( {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  
   },
   listItemDone: {
     backgroundColor: '#55BCF6',
@@ -49,26 +50,17 @@ const ListStyle = StyleSheet.create( {
     justifyContent: 'space-between',
     
   },
-  writeTaskWrapper: {
-    position: 'absolute',
-    bottom: 60,
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  addWrapper: {
-    width: 60,
-    height: 60,
-    backgroundColor: '#FFF',
-    borderRadius: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: '#C0C0C0',
-    borderWidth: 1,
-  },
+
+ 
   buttons: {
     display: 'flex',
     flexDirection: 'row',
+    padding: 15,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+    
   },
 })
+//marginBottom: 20,
