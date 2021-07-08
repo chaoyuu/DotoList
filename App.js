@@ -9,7 +9,7 @@ import {Header} from './components/Header'
 import {List} from './components/List'
 
 const appDefintion = {
-  name: "Today‘s  Task",
+  name: "Today‘s  Task", 
 }
 
 const storageKey = 'listdata'
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     paddingTop: Constants.statusBarHeight,
-    backgroundColor:'#fff',
+    backgroundColor: Colours.secondary,
   },
   paragraph: {
     margin: 24,
