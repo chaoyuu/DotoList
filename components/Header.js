@@ -39,6 +39,7 @@ export function Header(props) {
         />
         <TouchableOpacity style={HeaderStyles.inputButton} onPress={pressHandler}>
           <Icon name="add" color={Colours.light} />
+          
         </TouchableOpacity>
       </View>
     </View>
@@ -47,17 +48,20 @@ export function Header(props) {
 
 const HeaderStyles = StyleSheet.create({
   header: {
-    backgroundColor: Colours.primary,
+    backgroundColor: Colours.prmary,
     paddingHorizontal: 5,
     paddingVertical: 3,
+   
   },
   headerText: {
     color: Colours.light,
     paddingVertical: 3,
+   
   },
   inputContainer: {
     display: 'flex',
     flexDirection: 'row',
+   
   },
   input: {
     backgroundColor: Colours.light,
@@ -67,15 +71,17 @@ const HeaderStyles = StyleSheet.create({
     flex: 1,
     borderTopLeftRadius: 6,
     borderBottomLeftRadius: 6,
+    
+    
   },
   inputButton: {
-    width: 50,
-    backgroundColor: Colours.secondary,
-    display: 'flex',
+    width: 40,
+    backgroundColor: Colours.brown,
+    //display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    borderTopRightRadius: 6,
-    borderBottomRightRadius: 6,
+    borderRadius: 60,
+   
   },
   inputButtonText: {
     color: Colours.light,
