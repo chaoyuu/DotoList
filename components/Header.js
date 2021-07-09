@@ -7,6 +7,8 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Image
+  
 } from 'react-native';
 
 import { Colours } from './Colours';
@@ -30,7 +32,9 @@ export function Header(props) {
   return (
     <View style={HeaderStyles.header}>
       <Text style={HeaderStyles.headerText}>{props.name}</Text>
+     
       <View style={HeaderStyles.inputContainer}>
+      <Image style={HeaderStyles.headerLogo} source={require('../assets/todolist-logo.png')} />
         <TextInput 
           onChangeText={inputHandler} 
           style={HeaderStyles.input} 
@@ -81,9 +85,15 @@ const HeaderStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 60,
-   
+    
+
+    
   },
   inputButtonText: {
     color: Colours.light,
   },
+  headerLogo: {
+   width: 36,
+   height: 36,
+  }
 });

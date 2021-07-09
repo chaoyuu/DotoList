@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import { Colours } from './Colours';
 import { Icon } from 'react-native-elements'
 
@@ -14,7 +14,7 @@ export function List(props) {
           <Icon name="check" color={ Colours.dark }/>
         </TouchableOpacity>
         <TouchableOpacity onPress={ () => props.deleteHandler(item.id) }>
-          <Icon name="delete" color={ Colours.brown }/>
+          <Icon name="delete" color={ Colours.dark }/>
         </TouchableOpacity>
       </View>
     </View>
@@ -39,6 +39,7 @@ const ListStyle = StyleSheet.create( {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    
   
   },
   listItemDone: {
@@ -49,6 +50,7 @@ const ListStyle = StyleSheet.create( {
     flexDirection: 'row',
     justifyContent: 'space-between',
     
+    
   },
 
  
@@ -58,7 +60,7 @@ const ListStyle = StyleSheet.create( {
     padding: 15,
     borderRadius: 10,
     flexDirection: 'row',
-    alignItems: 'center',
+   alignItems: 'center',
     marginBottom: 20,
     
   },
