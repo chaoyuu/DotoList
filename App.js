@@ -96,11 +96,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingTop: Constants.statusBarHeight,
     backgroundColor: Colours.secondary,
+    
+
   },
   paragraph: {
     margin: 24,
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
+    
   },
 });
